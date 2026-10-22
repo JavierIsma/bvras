@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BVRAS // Streetwear Minimalista</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Montserrat & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bvras: {
+              black: '#0A0A0A',
+              white: '#FFFFFF',
+              gray: '#71717A',
+              lightGray: '#F4F4F5',
+              darkGray: '#18181B',
+              border: '#E4E4E7'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Montserrat', 'sans-serif'],
+          },
+          letterSpacing: {
+            widest: '.25em',
+            ultra: '.35em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Estilos personalizados para la estética minimalista ZUMMO */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #0A0A0A;
+      overflow-x: hidden;
+    }
+
+    .font-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+    }
+
+    /* Ocultar barra de scroll en navegadores */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Animaciones suaves */
+    .drawer-transition {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Aspect ratio de moda vertical (3:4) */
+    .aspect-fashion {
+      aspect-ratio: 3 / 4;
+    }
+  </style>
+</head>
+<body class="bg-white text-bvras-black antialiased selection:bg-bvras-black selection:text-white">
+
+  <!-- 1. BARRA SUPERIOR PROMOCIONAL (TOP BANNER) -->
+  <div class="bg-bvras-black text-white text-[10px] md:text-xs py-2 px-4 text-center tracking-widest uppercase font-medium border-b border-zinc-800 relative z-50">
+    <span>ENVÍO GRATIS EN COMPRAS MAYORES A $60.000 &nbsp;|&nbsp; 3 CUOTAS SIN INTERÉS &nbsp;|&nbsp; 10% OFF EN TRANSFERENCIA</span>
+  </div>
+
+  <!-- 2. ENCABEZADO (HEADER CLEAN & STICKY) -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-bvras-border/60 transition-all duration-300" id="main-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Menú Mobile Toggle -->
+      <button id="mobile-menu-btn" class="lg:hidden p-2 text-bvras-black hover:opacity-70 transition" aria-label="Abrir Menú">
+        <i data-lucide="menu" class="w-6 h-6 stroke-[1.5]"></i>
+      </button>
+
+      <!-- Logo Central -->
+      <div class="flex-1 lg:flex-none text-center lg:text-left">
+        <a href="#" class="font-brand text-2xl md:text-3xl tracking-ultra uppercase text-bvras-black inline-block">
+          BVRAS
+        </a>
+      </div>
+
+      <!-- Navegación Principal (Escritorio) -->
+      <nav class="hidden lg:flex items-center space-x-8 text-xs font-semibold tracking-widest uppercase">
+        <a href="#drops" class="hover:text-bvras-gray transition-colors py-2 border-b border-transparent hover:border-bvras-black">DROPS</a>
+        <a href="#productos" onclick="filterCategory('hoodies')" class="hover:text-bvras-gray transition-colors py-2 border-b border-transparent hover:border-bvras-black">HOODIES</a>
+        <a href="#productos" onclick="filterCategory('joggers')" class="hover:text-bvras-gray transition-colors py-2 border-b border-transparent hover:border-bvras-black">JOGGERS</a>
+        <a href="#productos" onclick="filterCategory('tops')" class="hover:text-bvras-gray transition-colors py-2 border-b border-transparent hover:border-bvras-black">TOPS</a>
+        <a href="#sobre-bvras" class="hover:text-bvras-gray transition-colors py-2 border-b border-transparent hover:border-bvras-black">SOBRE BVRAS</a>
+        <a href="#contacto" class="hover:text-bvras-gray transition-colors py-2 border-b border-transparent hover:border-bvras-black">CONTACTO</a>
+      </nav>
+
+      <!-- Iconos de Acción -->
+      <div class="flex items-center space-x-5">
+        <button id="search-btn" class="p-2 hover:opacity-60 transition" aria-label="Buscar">
+          <i data-lucide="search" class="w-5 h-5 stroke-[1.5]"></i>
+        </button>
+        <button id="cart-btn" class="p-2 hover:opacity-60 transition relative" aria-label="Carrito de Compras">
+          <i data-lucide="shopping-bag" class="w-5 h-5 stroke-[1.5]"></i>
+          <span id="cart-count" class="absolute top-1 right-0 bg-bvras-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center opacity-0 scale-75 transition-all duration-300">
+            0
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ MOBILE (DRAWER) -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div id="mobile-menu-content" class="fixed inset-y-0 left-0 max-w-xs w-full bg-white shadow-2xl p-6 flex flex-col justify-between -translate-x-full drawer-transition">
+      <div>
+        <div class="flex justify-between items-center mb-10 pb-4 border-b border-bvras-border">
+          <span class="font-brand text-xl tracking-widest">BVRAS</span>
+          <button id="close-mobile-menu" class="p-1 text-bvras-black hover:opacity-60">
+            <i data-lucide="x" class="w-6 h-6 stroke-[1.5]"></i>
+          </button>
+        </div>
+        <nav class="flex flex-col space-y-6 text-sm font-semibold tracking-widest uppercase">
+          <a href="#drops" class="mobile-link py-1 hover:text-bvras-gray transition">DROPS</a>
+          <a href="#productos" onclick="filterCategory('hoodies'); closeMobileMenu();" class="mobile-link py-1 hover:text-bvras-gray transition">HOODIES</a>
+          <a href="#productos" onclick="filterCategory('joggers'); closeMobileMenu();" class="mobile-link py-1 hover:text-bvras-gray transition">JOGGERS</a>
+          <a href="#productos" onclick="filterCategory('tops'); closeMobileMenu();" class="mobile-link py-1 hover:text-bvras-gray transition">TOPS</a>
+          <a href="#sobre-bvras" class="mobile-link py-1 hover:text-bvras-gray transition">SOBRE BVRAS</a>
+          <a href="#contacto" class="mobile-link py-1 hover:text-bvras-gray transition">CONTACTO</a>
+        </nav>
+      </div>
+      <div class="pt-6 border-t border-bvras-border text-xs text-bvras-gray space-y-2">
+        <p>Instagram: @bvras.arg</p>
+        <p>© 2026 BVRAS. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL BÚSQUEDA -->
+  <div id="search-modal" class="fixed inset-0 z-50 bg-white/95 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col p-6 lg:p-12">
+    <div class="flex justify-end">
+      <button id="close-search" class="p-2 hover:opacity-60 transition">
+        <i data-lucide="x" class="w-8 h-8 stroke-[1.5]"></i>
+      </button>
+    </div>
+    <div class="max-w-3xl w-full mx-auto mt-12">
+      <div class="relative border-b-2 border-bvras-black pb-2">
+        <input type="text" id="search-input" placeholder="BUSCAR PRENDA (EJ. HOODIE, JOGGER)..." class="w-full bg-transparent text-xl md:text-3xl font-light uppercase tracking-wider focus:outline-none placeholder:text-zinc-400">
+        <i data-lucide="search" class="absolute right-0 top-1/2 -translate-y-1/2 w-7 h-7 text-zinc-400"></i>
+      </div>
+      <div id="search-results" class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto no-scrollbar">
+        <!-- Resultados dinámicos -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. HERO / BANNER PRINCIPAL (LOOKBOOK ESTÉTICA ZUMMO) -->
+  <section id="drops" class="relative bg-bvras-black text-white h-[85vh] min-h-[550px] flex items-center justify-center overflow-hidden">
+    <!-- Fondo Visual Oscuro Minimalista -->
+    <div class="absolute inset-0 opacity-45 bg-[url(./fotosestudios/campaña-todos.png)] bg-cover bg-center grayscale filter contrast-125"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-bvras-black via-transparent to-black/30"></div>
+
+    <div class="relative z-10 text-center max-w-4xl mx-auto px-4 flex flex-col items-center">
+      
+     
+      <p class="text-xs sm:text-sm md:text-base font-light tracking-widest text-zinc-300 max-w-lg mb-8 uppercase">
+        Siluetas holgadas, algodón pesado de alta densidad y minimalismo urbano atemporal.
+      </p>
+      <a href="#productos" class="inline-block bg-white text-bvras-black font-semibold text-xs tracking-widest uppercase px-8 py-4 hover:bg-zinc-200 transition-all duration-300 transform hover:-translate-y-0.5">
+        EXPLORAR COLECCIÓN
+      </a>
+    </div>
+  </section>
+
+  <!-- 4. GRILLA DE PRODUCTOS REDUCIDA -->
+  <section id="productos" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Encabezado de Sección y Filtros -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-bvras-border pb-6">
+      <div>
+        <span class="text-[10px] tracking-ultra uppercase font-bold text-bvras-gray">CATÁLOGO DE AUTOR</span>
+        <h2 class="text-2xl md:text-3xl font-brand tracking-widest uppercase mt-1">PIEZAS DESTACADAS</h2>
+      </div>
+
+      <!-- Filtros Categoría -->
+      <div class="flex items-center space-x-6 mt-6 md:mt-0 text-xs tracking-widest uppercase font-medium overflow-x-auto no-scrollbar pb-2 md:pb-0">
+        <button onclick="filterCategory('todos')" class="filter-btn active-filter text-bvras-black border-b-2 border-bvras-black pb-1 transition-all" data-cat="todos">TODOS</button>
+        <button onclick="filterCategory('hoodies')" class="filter-btn text-bvras-gray hover:text-bvras-black border-b-2 border-transparent pb-1 transition-all" data-cat="hoodies">HOODIES</button>
+        <button onclick="filterCategory('joggers')" class="filter-btn text-bvras-gray hover:text-bvras-black border-b-2 border-transparent pb-1 transition-all" data-cat="joggers">JOGGERS</button>
+        <button onclick="filterCategory('tops')" class="filter-btn text-bvras-gray hover:text-bvras-black border-b-2 border-transparent pb-1 transition-all" data-cat="tops">TOPS</button>
+      </div>
+    </div>
+
+    <!-- Grilla de Productos (4-6 Prendas) -->
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+      <!-- Inyectado vía JavaScript -->
+    </div>
+  </section>
+
+  <!-- 5. SECCIÓN "SOBRE BVRAS" (MANIFESTO) -->
+  <section id="sobre-bvras" class="bg-bvras-lightGray py-24 border-y border-bvras-border">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <span class="text-[10px] font-bold tracking-ultra uppercase text-bvras-gray mb-3 block">MANIFIESTO BVRAS</span>
+      <h2 class="font-brand text-2xl md:text-4xl tracking-widest uppercase mb-8">URBAN ATMOSPHERE & QUALITY</h2>
+      <div class="space-y-6 text-sm md:text-base font-light leading-relaxed text-zinc-700 max-w-2xl mx-auto">
+        <p>
+          BVRAS nace del deseo de redefinir la moda urbana hacia una estética de lujo sobrio y funcional. No seguimos tendencias efímeras; creamos prendas esenciales pensadas para perdurar en el tiempo.
+        </p>
+        <p>
+          Trabajamos únicamente con friza invisible pesada, algodones de alto gramaje y moldería contemporánea oversized. Cada una de nuestras colecciones se lanza en tiradas limitadas ("drops"), garantizando exclusividad, acabado artesanal y producción responsable.
+        </p>
+      </div>
+      
+      <!-- Detalle Técnico Minimalista -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 pt-12 border-t border-zinc-300">
+        <div class="p-4">
+          <i data-lucide="shield-check" class="w-6 h-6 mx-auto mb-3 text-bvras-black stroke-[1.2]"></i>
+          <h4 class="text-xs font-bold tracking-widest uppercase mb-1">ALGODÓN PREMIUM</h4>
+          <p class="text-xs text-bvras-gray font-light">400+ GSM de máxima suavidad y estructura.</p>
+        </div>
+        <div class="p-4">
+          <i data-lucide="scissors" class="w-6 h-6 mx-auto mb-3 text-bvras-black stroke-[1.2]"></i>
+          <h4 class="text-xs font-bold tracking-widest uppercase mb-1">CORTES AUTOR</h4>
+          <p class="text-xs text-bvras-gray font-light">Patronaje oversized propio diseñado en Argentina.</p>
+        </div>
+        <div class="p-4">
+          <i data-lucide="package" class="w-6 h-6 mx-auto mb-3 text-bvras-black stroke-[1.2]"></i>
+          <h4 class="text-xs font-bold tracking-widest uppercase mb-1">DROPS EXCLUSIVOS</h4>
+          <p class="text-xs text-bvras-gray font-light">Stock acotado por cada lanzamiento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER INFORMATIVO BENEFICIOS -->
+  <section class="py-12 bg-white border-b border-bvras-border">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div class="flex flex-col items-center space-y-2">
+        <i data-lucide="truck" class="w-6 h-6 stroke-[1.2] text-bvras-black"></i>
+        <h5 class="text-xs font-bold tracking-widest uppercase">ENVÍOS A TODO EL PAÍS</h5>
+        <p class="text-xs text-bvras-gray font-light">Gratis en compras superiores a $60.000</p>
+      </div>
+      <div class="flex flex-col items-center space-y-2">
+        <i data-lucide="credit-card" class="w-6 h-6 stroke-[1.2] text-bvras-black"></i>
+        <h5 class="text-xs font-bold tracking-widest uppercase">HASTA 3 CUOTAS SIN INTERÉS</h5>
+        <p class="text-xs text-bvras-gray font-light">Con todas las tarjetas de crédito bancarias</p>
+      </div>
+      <div class="flex flex-col items-center space-y-2">
+        <i data-lucide="refresh-cw" class="w-6 h-6 stroke-[1.2] text-bvras-black"></i>
+        <h5 class="text-xs font-bold tracking-widest uppercase">CAMBIOS SIMPLES</h5>
+        <p class="text-xs text-bvras-gray font-light">30 días para solicitar cambios de talle o modelo</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. CARRITO LATERAL (CART DRAWER EN JS) -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div id="cart-drawer-content" class="fixed inset-y-0 right-0 max-w-md w-full bg-white shadow-2xl flex flex-col justify-between translate-x-full drawer-transition">
+      
+      <!-- Header Carrito -->
+      <div class="p-6 border-b border-bvras-border flex justify-between items-center bg-white">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="shopping-bag" class="w-5 h-5 stroke-[1.5]"></i>
+          <h3 class="font-brand text-lg tracking-widest uppercase">MI CARRITO</h3>
+          <span id="cart-drawer-count-badge" class="text-xs text-bvras-gray font-light">(0)</span>
+        </div>
+        <button id="close-cart" class="p-1 hover:opacity-60 transition">
+          <i data-lucide="x" class="w-6 h-6 stroke-[1.5]"></i>
+        </button>
+      </div>
+
+      <!-- Items del Carrito -->
+      <div id="cart-items-container" class="p-6 overflow-y-auto flex-1 space-y-6 no-scrollbar">
+        <!-- Generado dinámicamente -->
+      </div>
+
+      <!-- Footer Carrito -->
+      <div class="p-6 border-t border-bvras-border bg-bvras-lightGray/50 space-y-4">
+        <div class="space-y-1.5 text-xs tracking-wider uppercase">
+          <div class="flex justify-between text-bvras-gray">
+            <span>SUBTOTAL:</span>
+            <span id="cart-subtotal" class="font-semibold text-bvras-black">$0</span>
+          </div>
+          <div class="flex justify-between text-bvras-gray">
+            <span>ENVÍO:</span>
+            <span id="cart-shipping" class="text-emerald-600 font-semibold">CALCULANDO</span>
+          </div>
+          <div class="flex justify-between text-sm font-bold pt-2 border-t border-bvras-border text-bvras-black">
+            <span>TOTAL:</span>
+            <span id="cart-total">$0</span>
+          </div>
+        </div>
+
+        <p class="text-[10px] text-bvras-gray text-center tracking-wider uppercase">
+          3 cuotas sin interés de <span id="installment-price" class="font-bold">$0</span>
+        </p>
+
+        <button id="checkout-btn" onclick="checkout()" class="w-full bg-bvras-black text-white font-semibold text-xs tracking-widest uppercase py-4 hover:bg-zinc-800 transition-colors flex items-center justify-center space-x-2">
+          <span>INICIAR COMPRA</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 stroke-[1.5]"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. PIE DE PÁGINA (FOOTER) -->
+  <footer id="contacto" class="bg-bvras-black text-white pt-16 pb-12 border-t border-zinc-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+      
+      <!-- Columna 1: Marca -->
+      <div class="space-y-4">
+        <a href="#" class="font-brand text-2xl tracking-ultra uppercase text-white block">BVRAS</a>
+        <p class="text-xs text-zinc-400 font-light leading-relaxed">
+          Estética urbana minimalista de corte contemporáneo. Diseñado y confeccionado con estándares de alta gama.
+        </p>
+        <div class="pt-2">
+          <a href="https://instagram.com" target="_blank" class="inline-flex items-center space-x-2 text-xs tracking-widest text-zinc-300 hover:text-white transition">
+            <i data-lucide="instagram" class="w-4 h-4"></i>
+            <span>@BVRAS.ARG</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna 2: Navegación -->
+      <div>
+        <h4 class="text-xs font-bold tracking-widest uppercase mb-4 text-white">NAVEGACIÓN</h4>
+        <ul class="space-y-2.5 text-xs text-zinc-400 font-light tracking-wider uppercase">
+          <li><a href="#drops" class="hover:text-white transition">DROPS EXCLUSIVOS</a></li>
+          <li><a href="#productos" onclick="filterCategory('hoodies')" class="hover:text-white transition">HOODIES</a></li>
+          <li><a href="#productos" onclick="filterCategory('joggers')" class="hover:text-white transition">JOGGERS</a></li>
+          <li><a href="#productos" onclick="filterCategory('tops')" class="hover:text-white transition">TOPS</a></li>
+          <li><a href="#sobre-bvras" class="hover:text-white transition">SOBRE LA MARCA</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 3: Ayuda & Políticas -->
+      <div>
+        <h4 class="text-xs font-bold tracking-widest uppercase mb-4 text-white">AYUDA & INFORMACIÓN</h4>
+        <ul class="space-y-2.5 text-xs text-zinc-400 font-light tracking-wider uppercase">
+          <li><a href="#" onclick="alert('Guía de talles: Nuestras prendas son moldería Oversized Fit. Te recomendamos elegir tu talle habitual para un calce holgado.'); return false;" class="hover:text-white transition">GUÍA DE TALLES</a></li>
+          <li><a href="#" onclick="alert('Política de cambios: Dispones de 30 días seguidos desde la recepción del producto.'); return false;" class="hover:text-white transition">POLÍTICA DE CAMBIOS</a></li>
+          <li><a href="#" onclick="alert('Preguntas frecuentes: Envíos por Correo Argentino / Andreani en 3 a 5 días hábiles.'); return false;" class="hover:text-white transition">PREGUNTAS FRECUENTES</a></li>
+          <li><a href="#" onclick="alert('Contacto directo: hola@bvras.com / WhatsApp +54 9 11 0000 0000'); return false;" class="hover:text-white transition">CONTACTO DIRECTO</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 4: Newsletter -->
+      <div class="space-y-4">
+        <h4 class="text-xs font-bold tracking-widest uppercase text-white">NEWSLETTER</h4>
+        <p class="text-xs text-zinc-400 font-light">Suscribite para recibir acceso anticipado a los próximos Drops.</p>
+        <form onsubmit="handleNewsletter(event)" class="space-y-2">
+          <input type="email" required placeholder="TU EMAIL AQUÍ" class="w-full bg-zinc-900 border border-zinc-700 px-3 py-2.5 text-xs text-white placeholder:text-zinc-500 focus:outline-none focus:border-white transition">
+          <button type="submit" class="w-full bg-white text-bvras-black font-semibold text-xs tracking-widest uppercase py-2.5 hover:bg-zinc-200 transition">
+            SUSCRIBIRSE
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Sub-footer: Medios de pago y copyright -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-zinc-800/80 flex flex-col md:flex-row items-center justify-between text-xs text-zinc-500 space-y-4 md:space-y-0">
+      <p>© 2026 BVRAS CLOTHING. TODOS LOS DERECHOS RESERVADOS.</p>
+      <div class="flex items-center space-x-4 tracking-wider text-[11px]">
+        <span>VISA</span>
+        <span>MASTERCARD</span>
+        <span>MERCADO PAGO</span>
+        <span>TRANSFERENCIA</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- NOTIFICACIÓN TOAST SIMPLIFICADA -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-bvras-black text-white text-xs tracking-widest uppercase px-5 py-3 shadow-2xl flex items-center space-x-3 translate-y-20 opacity-0 transition-all duration-300">
+    <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-message">PRODUCTO AGREGADO</span>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // --- BASE DE DATOS DE PRODUCTOS ---
+    const PRODUCTS = [
+      {
+        id: '1',
+        name: 'BVRAS Heavy Oversized Hoodie',
+        category: 'hoodies',
+        price: 85000,
+        image: './fotosestudios/Hoodie 1.png',
+        details: 'Friza pesada 450 GSM. Capucha doble con estructura rígida.'
+      },
+      {
+        id: '2',
+        name: 'BVRAS Essential Jogger Heavy',
+        category: 'joggers',
+        price: 68000,
+        image: './fotosestudios/Joggers 1.png',
+        details: 'Corte relajado, puños ajustados y bolsillos profundos con cierre.'
+      },
+      {
+        id: '3',
+        name: 'BVRAS Crop Top Minimal',
+        category: 'tops',
+        price: 38000,
+        image: './fotosestudios/Crop 1.png',
+        details: 'Algodón acanalado premium con bordado de micro-logo tonal.'
+      },
+      {
+        id: '4',
+        name: 'BVRAS Boxy Fit Hoodie Charcoal',
+        category: 'hoodies',
+        price: 89000,
+        image: './fotosestudios/Hoodie 2.png',
+        details: 'Tono grafito lavado en prenda. Moldería amplia de hombros caídos.'
+      },
+      {
+        id: '5',
+        name: 'BVRAS Cargo Jogger Technical',
+        category: 'joggers',
+        price: 74000,
+        image: './fotosestudios/Joggers 2.png',
+        details: 'Gabarda elastizada con bolsillos tácticos laterales.'
+      },
+      {
+        id: '6',
+        name: 'BVRAS Oversized Essential Tee',
+        category: 'tops',
+        price: 42000,
+        image: './fotosestudios/Crop 1.png',
+        details: 'Algodón peinado 24/1. Cuello de rib grueso atemporal.'
+      }
+    ];
+
+    // --- ESTADO GLOBAL ---
+    let cart = [];
+    let selectedCategory = 'todos';
+    let selectedSizes = {}; // { productId: 'M' }
+
+    // --- INICIALIZACIÓN ---
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderProducts();
+      setupEventListeners();
+      updateCartUI();
+    });
+
+    // --- RENDERIZADO DE PRODUCTOS ---
+    function renderProducts() {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = '';
+
+      const filtered = selectedCategory === 'todos' 
+        ? PRODUCTS 
+        : PRODUCTS.filter(p => p.category === selectedCategory);
+
+      filtered.forEach(product => {
+        // Talle seleccionado por defecto 'M' si no existe
+        if (!selectedSizes[product.id]) {
+          selectedSizes[product.id] = 'M';
+        }
+
+        const currentSize = selectedSizes[product.id];
+        const installment = Math.round(product.price / 3);
+
+        const card = document.createElement('div');
+        card.className = 'group flex flex-col fade-in';
+        card.innerHTML = `
+          <!-- Imagen del Producto -->
+          <div class="relative overflow-hidden bg-bvras-lightGray aspect-fashion mb-4 rounded-sm">
+            <img 
+              src="${product.image}" 
+              alt="${product.name}" 
+              class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out filter grayscale hover:grayscale-0"
+              loading="lazy"
+            />
+            
+            <!-- Etiqueta Drop -->
+            <div class="absolute top-3 left-3 bg-bvras-black text-white text-[9px] font-bold tracking-widest uppercase px-2.5 py-1">
+              VOL 1 // DROP
+            </div>
+
+            <!-- Botón hover rápido -->
+            <button 
+              onclick="addToCart('${product.id}')"
+              class="absolute bottom-0 inset-x-0 bg-bvras-black/90 text-white text-xs font-semibold tracking-widest uppercase py-3.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center space-x-2 backdrop-blur-sm"
+            >
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>AGREGAR AL CARRITO</span>
+            </button>
+          </div>
+
+          <!-- Info Producto -->
+          <div class="flex-1 flex flex-col justify-between space-y-2">
+            <div>
+              <h3 class="font-medium text-xs md:text-sm tracking-wider uppercase text-bvras-black group-hover:text-bvras-gray transition-colors">
+                ${product.name}
+              </h3>
+              <p class="text-[11px] text-bvras-gray font-light mt-0.5 line-clamp-1">${product.details}</p>
+            </div>
+
+            <!-- Selector de Talle discreto -->
+            <div class="flex items-center space-x-2 pt-1">
+              <span class="text-[10px] tracking-widest text-bvras-gray uppercase font-semibold">TALLE:</span>
+              <div class="flex space-x-1">
+                ${['S', 'M', 'L', 'XL'].map(size => `
+                  <button 
+                    onclick="selectSize('${product.id}', '${size}')"
+                    class="w-6 h-6 text-[10px] font-medium tracking-wider flex items-center justify-center rounded-xs transition-colors border ${currentSize === size ? 'border-bvras-black bg-bvras-black text-white' : 'border-bvras-border text-bvras-gray hover:border-bvras-black'}"
+                  >
+                    ${size}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Precio y Cuotas -->
+            <div class="pt-2 border-t border-bvras-border/50 flex justify-between items-baseline">
+              <div>
+                <span class="font-bold text-sm md:text-base tracking-wider">$${product.price.toLocaleString('es-AR')}</span>
+              </div>
+              <span class="text-[10px] text-bvras-gray tracking-wider uppercase">3x $${installment.toLocaleString('es-AR')} sin interés</span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    // --- SELECCIÓN DE TALLE ---
+    function selectSize(productId, size) {
+      selectedSizes[productId] = size;
+      renderProducts();
+    }
+
+    // --- FILTRADO DE CATEGORÍAS ---
+    function filterCategory(cat) {
+      selectedCategory = cat;
+      
+      // Actualizar estilo botones
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.classList.add('text-bvras-black', 'border-bvras-black');
+          btn.classList.remove('text-bvras-gray', 'border-transparent');
+        } else {
+          btn.classList.remove('text-bvras-black', 'border-bvras-black');
+          btn.classList.add('text-bvras-gray', 'border-transparent');
+        }
+      });
+
+      renderProducts();
+    }
+
+    // --- CARRITO LOGIC ---
+    function addToCart(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      const size = selectedSizes[productId] || 'M';
+
+      const existingIndex = cart.findIndex(item => item.id === productId && item.size === size);
+
+      if (existingIndex > -1) {
+        cart[existingIndex].quantity += 1;
+      } else {
+        cart.push({
+          ...product,
+          size: size,
+          quantity: 1
+        });
+      }
+
+      updateCartUI();
+      showToast(`AGREGADO: ${product.name} (${size})`);
+      openCartDrawer();
+    }
+
+    function updateCartQuantity(productId, size, change) {
+      const itemIndex = cart.findIndex(item => item.id === productId && item.size === size);
+      
+      if (itemIndex > -1) {
+        cart[itemIndex].quantity += change;
+        if (cart[itemIndex].quantity <= 0) {
+          cart.splice(itemIndex, 1);
+        }
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const cartContainer = document.getElementById('cart-items-container');
+      const cartCountEl = document.getElementById('cart-count');
+      const cartDrawerCountBadge = document.getElementById('cart-drawer-count-badge');
+      const cartSubtotalEl = document.getElementById('cart-subtotal');
+      const cartTotalEl = document.getElementById('cart-total');
+      const installmentPriceEl = document.getElementById('installment-price');
+
+      // Calcular total de prendas
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      
+      // Contador badge header
+      cartCountEl.textContent = totalItems;
+      cartDrawerCountBadge.textContent = `(${totalItems})`;
+
+      if (totalItems > 0) {
+        cartCountEl.classList.remove('opacity-0', 'scale-75');
+        cartCountEl.classList.add('opacity-100', 'scale-100');
+      } else {
+        cartCountEl.classList.add('opacity-0', 'scale-75');
+        cartCountEl.classList.remove('opacity-100', 'scale-100');
+      }
+
+      // Renderizar items
+      if (cart.length === 0) {
+        cartContainer.innerHTML = `
+          <div class="h-full flex flex-col items-center justify-center text-center py-12 text-bvras-gray">
+            <i data-lucide="shopping-bag" class="w-12 h-12 stroke-[1] mb-3 text-zinc-300"></i>
+            <p class="text-xs tracking-widest uppercase font-medium">TU CARRITO ESTÁ VACÍO</p>
+            <p class="text-[11px] font-light mt-1">Explora el nuevo Drop e inicia tu selección.</p>
+          </div>
+        `;
+      } else {
+        cartContainer.innerHTML = cart.map(item => `
+          <div class="flex space-x-4 border-b border-bvras-border pb-4">
+            <img src="${item.image}" alt="${item.name}" class="w-20 h-24 object-cover bg-bvras-lightGray rounded-xs">
+            <div class="flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h4 class="text-xs font-semibold tracking-wider uppercase text-bvras-black line-clamp-1">${item.name}</h4>
+                  <button onclick="updateCartQuantity('${item.id}', '${item.size}', -999)" class="text-zinc-400 hover:text-black">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <p class="text-[10px] text-bvras-gray tracking-widest uppercase mt-0.5">TALLE: <span class="font-bold text-bvras-black">${item.size}</span></p>
+                <p class="text-xs font-bold text-bvras-black mt-1">$${item.price.toLocaleString('es-AR')}</p>
+              </div>
+
+              <!-- Control Cantidad -->
+              <div class="flex items-center space-x-3 border border-bvras-border w-max px-2 py-0.5">
+                <button onclick="updateCartQuantity('${item.id}', '${item.size}', -1)" class="text-xs text-bvras-gray hover:text-black font-bold">-</button>
+                <span class="text-xs font-semibold tracking-wider">${item.quantity}</span>
+                <button onclick="updateCartQuantity('${item.id}', '${item.size}', 1)" class="text-xs text-bvras-gray hover:text-black font-bold">+</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Totales
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const installment = Math.round(subtotal / 3);
+
+      cartSubtotalEl.textContent = `$${subtotal.toLocaleString('es-AR')}`;
+      cartTotalEl.textContent = `$${subtotal.toLocaleString('es-AR')}`;
+      installmentPriceEl.textContent = `$${installment.toLocaleString('es-AR')}`;
+
+      // Envíos gratis flag
+      const shippingEl = document.getElementById('cart-shipping');
+      if (subtotal >= 60000 || subtotal === 0) {
+        shippingEl.textContent = 'GRATIS';
+        shippingEl.className = 'text-emerald-600 font-semibold';
+      } else {
+        const diff = 60000 - subtotal;
+        shippingEl.textContent = `FALTAN $${diff.toLocaleString('es-AR')} PARA ENVÍO GRATIS`;
+        shippingEl.className = 'text-xs text-bvras-gray font-light';
+      }
+
+      lucide.createIcons();
+    }
+
+    // --- CONTROLES DE INTERFAZ & MODALES ---
+    function setupEventListeners() {
+      // Carrito Drawer
+      const cartBtn = document.getElementById('cart-btn');
+      const closeCartBtn = document.getElementById('close-cart');
+      const cartDrawer = document.getElementById('cart-drawer');
+
+      cartBtn.addEventListener('click', openCartDrawer);
+      closeCartBtn.addEventListener('click', closeCartDrawer);
+      cartDrawer.addEventListener('click', (e) => {
+        if (e.target === cartDrawer) closeCartDrawer();
+      });
+
+      // Menú Mobile
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      mobileMenuBtn.addEventListener('click', openMobileMenu);
+      closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+      mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) closeMobileMenu();
+      });
+
+      // Búsqueda Modal
+      const searchBtn = document.getElementById('search-btn');
+      const closeSearchBtn = document.getElementById('close-search');
+      const searchModal = document.getElementById('search-modal');
+      const searchInput = document.getElementById('search-input');
+
+      searchBtn.addEventListener('click', () => {
+        searchModal.classList.remove('opacity-0', 'pointer-events-none');
+        searchInput.focus();
+      });
+
+      closeSearchBtn.addEventListener('click', () => {
+        searchModal.classList.add('opacity-0', 'pointer-events-none');
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const resultsContainer = document.getElementById('search-results');
+
+        if (!query) {
+          resultsContainer.innerHTML = '';
+          return;
+        }
+
+        const matches = PRODUCTS.filter(p => 
+          p.name.toLowerCase().includes(query) || 
+          p.category.toLowerCase().includes(query) ||
+          p.details.toLowerCase().includes(query)
+        );
+
+        if (matches.length === 0) {
+          resultsContainer.innerHTML = `<p class="text-xs text-bvras-gray uppercase tracking-widest col-span-2 py-4">No se encontraron prendas para "${query}"</p>`;
+        } else {
+          resultsContainer.innerHTML = matches.map(p => `
+            <div onclick="closeSearchModalAndScroll('${p.id}')" class="flex items-center space-x-3 p-2 hover:bg-bvras-lightGray cursor-pointer transition">
+              <img src="${p.image}" class="w-12 h-16 object-cover">
+              <div>
+                <h5 class="text-xs font-semibold tracking-wider uppercase text-bvras-black">${p.name}</h5>
+                <p class="text-xs font-bold text-bvras-gray mt-0.5">$${p.price.toLocaleString('es-AR')}</p>
+              </div>
+            </div>
+          `).join('');
+        }
+      });
+    }
+
+    function openCartDrawer() {
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartDrawerContent = document.getElementById('cart-drawer-content');
+      cartDrawer.classList.remove('opacity-0', 'pointer-events-none');
+      cartDrawerContent.classList.remove('translate-x-full');
+    }
+
+    function closeCartDrawer() {
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartDrawerContent = document.getElementById('cart-drawer-content');
+      cartDrawerContent.classList.add('translate-x-full');
+      setTimeout(() => {
+        cartDrawer.classList.add('opacity-0', 'pointer-events-none');
+      }, 300);
+    }
+
+    function openMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuContent = document.getElementById('mobile-menu-content');
+      mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+      mobileMenuContent.classList.remove('-translate-x-full');
+    }
+
+    function closeMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuContent = document.getElementById('mobile-menu-content');
+      mobileMenuContent.classList.add('-translate-x-full');
+      setTimeout(() => {
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+      }, 300);
+    }
+
+    function closeSearchModalAndScroll() {
+      document.getElementById('search-modal').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Tu carrito está vacío.');
+        return;
+      }
+      alert('¡Gracias por tu pedido! Redirigiendo a la pasarela de pago segura de BVRAS...');
+    }
+
+    function handleNewsletter(e) {
+      e.preventDefault();
+      showToast('¡GRACIAS POR SUSCRIBIRTE!');
+      e.target.reset();
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      toastMessage.textContent = message;
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
